@@ -21,8 +21,7 @@ The figure shows some components of a computer system. In fact it shows the hard
 <p>We would like to understand the concept of Abstraction</p>
 <h2 id="abstraction">Abstraction</h2>
 <p>Abstraction means hide the details of the layer below and only expose a logical view</p>
-<p><s>A crucial job of these interfaces is to provide “abstraction” i.e. hide the details of the layer below and only expose a logical view—a view that is required by layer above to interact with layer below. So in the case of ISA, the machine code of the specific processor is underlying layer, but ISA abstracts the machine code and says that well all processors perform data handling and memory operations, arithmetic and logic operations, control flow operations, and load/store of CPU registers. So an OS only needs to be aware of these operations but not the implementation/machine code of the operations below it.</s></p>
-<p><s>Coming back to the computer system, as we can see there are 3 important interfaces in the system: the ISA, the Application Binary Interface (which “abstracts” OS details from the application, and the Application Programming Interface (which “abstracts” application details from another application). But we will come to these interfaces and the abstraction they provide a bit later.</s></p>
+<!-- Coming back to the computer system, as we can see there are 3 important interfaces in the system: the ISA, the Application Binary Interface (which &#34;abstracts&#34; OS details from the application, and the Application Programming Interface (which &#34;abstracts&#34; application details from another application). But we will come to these interfaces and the abstraction they provide a bit later.-->
 <p><em>Q: Have you as a programmer ever used the concept of abstraction for any other part of the computer system?</em></p>
 <blockquote>
 <p>The file is an abstraction of the disk</p>
@@ -35,15 +34,17 @@ The figure shows some components of a computer system. In fact it shows the hard
 </blockquote>
 <p>In other words if the lower layer changes then there is no way the above layer will work. Lets translate this picture in computer systems. Lets say we have a Intel CPU with Linux installed and a AMD CPU with Linux installed on it. I can always take the source code and translate into machine code in each machine, but I cannot take the machine code from one machine and simply run on another machine.</p>
 <blockquote>
-<p>See StackOverflow Post: <a href="https://unix.stackexchange.com/questions/298281/are-binaries-portable-across-different-cpu-architectures">https://unix.stackexchange.com/questions/298281/are-binaries-portable-across-different-cpu-architectures</a></p>
+<p>Read StackOverflow post for a nice discussion about this example: <a href="https://unix.stackexchange.com/questions/298281/are-binaries-portable-across-different-cpu-architectures">https://unix.stackexchange.com/questions/298281/are-binaries-portable-across-different-cpu-architectures</a></p>
 </blockquote>
 <p>Now the situation is grave. We not only have different CPUs, we do have different OSs, different versions of libraries. In fact the complexity is number of possibilities times the number of “well-defined” interfaces in computer systems.</p>
-<p>There are 3 important interfaces in the system: the ISA, the Application Binary Interface (which “abstracts” OS details from the application, and the Application Programming Interface (which “abstracts” application details from another application). <s><em>For example:</em> the interface between hardware and software is known as the Instruction Set Architecture (ISA).</s></p>
+<p>There are 3 important interfaces in the system: the ISA, the Application Binary Interface (which “abstracts” OS details from the application, and the Application Programming Interface (which “abstracts” application details from another application). <!--*For example:* the interface between hardware and software is known as the Instruction Set Architecture (ISA).--></p>
 <p>Program distribution with only  abstraction is a challenge. Abstraction only transforms application programs to compiled binaries, which are tied to a specific ISA and depend on a specific operating system interface. But, we can never take any intermediate representation and run it on another computer because there are interoperability issues.</p>
 <p>If you have heard the term “software distribution”–the above is the holy grail of software distribution that a program compiles with some OS, even though distributed may not work on another OS.</p>
-<p><s>Formally, subsystems and components designed to specifications for one interface will not work with those designed for another.</s></p>
-<p><s><em>Q: As a programmer have you ever faced this situation when a layer above did not work for layer below? Look carefully at the computer system layers.</em></s><br>
-<s>&gt; A program implemented for Windows machine does not  work on Linux machine</s></p>
+<!--Formally, subsystems and components designed to specifications for one interface will not work with those designed for another.-->
+<p><em>Q: As a programmer have you ever faced this situation when a layer above did not work for layer below? Look carefully at the computer system layers.</em>~~</p>
+<blockquote>
+<p>A program implemented for Windows machine does not  work on Linux machine</p>
+</blockquote>
 <h2 id="virtualization">Virtualization</h2>
 <p><strong>Virtualization does not necessarily aim to simplify or hide details.</strong> It just gives you the underlying ugliness but provides a mapping software so that the underlying ugliness that your software understands can be mapped to the available ugliness.</p>
 <p>Formally, virtualizing a system or component—such as a processor, memory, or an I/O device—at a given abstraction level <strong>maps its interface  and visible resources onto the interface and resources of an underlying, possibly different, real system.</strong></p>
@@ -127,6 +128,10 @@ These calls are called System Calls</p>
 <p>System calls are written in C.</p>
 </li>
 </ul>
+<blockquote>
+<p>Note: there are a total of 329 calls. See here for a listing<br>
+<a href="http://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64/">http://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64/</a></p>
+</blockquote>
 <h2 id="how-user-mode-is-switched-to-kernel-mode">How user mode is switched to kernel mode</h2>
 <p>Two points to note:</p>
 <ul>
