@@ -20,7 +20,7 @@ The figure shows some components of a computer system. In fact it shows the hard
 <p>Hierarchy introduces abstraction. As a user you don’t have understand machine code but just the higher level language.</p>
 <p>We would like to understand the concept of Abstraction</p>
 <h2 id="abstraction">Abstraction</h2>
-<p>Aabstraction means hide the details of the layer below and only expose a logical view</p>
+<p>Abstraction means hide the details of the layer below and only expose a logical view</p>
 <p><s>A crucial job of these interfaces is to provide “abstraction” i.e. hide the details of the layer below and only expose a logical view—a view that is required by layer above to interact with layer below. So in the case of ISA, the machine code of the specific processor is underlying layer, but ISA abstracts the machine code and says that well all processors perform data handling and memory operations, arithmetic and logic operations, control flow operations, and load/store of CPU registers. So an OS only needs to be aware of these operations but not the implementation/machine code of the operations below it.</s></p>
 <p><s>Coming back to the computer system, as we can see there are 3 important interfaces in the system: the ISA, the Application Binary Interface (which “abstracts” OS details from the application, and the Application Programming Interface (which “abstracts” application details from another application). But we will come to these interfaces and the abstraction they provide a bit later.</s></p>
 <p><em>Q: Have you as a programmer ever used the concept of abstraction for any other part of the computer system?</em></p>
@@ -191,7 +191,21 @@ These calls are called System Calls</p>
 <ul>
 <li>See the system call’s man page for details about the meaning of the return value</li>
 <li>int errno is a global variable that is set by the kernel side of the system call to provide more details about any error that has occurred</li>
-<li>Many system calls return -1 to indicate an error; then, you can use errno to extract additional meaning</li>
+</ul>
+<pre class=" language-c"><code class="prism  language-c">fd <span class="token operator">=</span> <span class="token function">open</span><span class="token punctuation">(</span>pathname<span class="token punctuation">,</span> flags<span class="token punctuation">,</span> mode<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>fd <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<span class="token comment">/* Code to handle the error */</span>
+<span class="token punctuation">}</span> 
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">close</span><span class="token punctuation">(</span>fd<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<span class="token comment">/* Code to handle the error */</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<ul>
+<li>Many system calls return -1 to indicate an error; then, you can use errno to extract additional meaning
+<ul>
+<li>getpid(), exit() do not return an error value. No need to check return values from such system calls</li>
+</ul>
+</li>
 </ul>
 <p>A variety of available functions will make it easy to translate the error number into a textual description</p>
 <ul>
@@ -210,6 +224,12 @@ These calls are called System Calls</p>
 </ul>
 </li>
 </ul>
+<pre class=" language-c"><code class="prism  language-c">fd <span class="token operator">=</span> <span class="token function">open</span><span class="token punctuation">(</span>pathname<span class="token punctuation">,</span> flags<span class="token punctuation">,</span> mode<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>fd <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<span class="token function">perror</span><span class="token punctuation">(</span><span class="token string">"open"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">exit</span><span class="token punctuation">(</span>EXIT_FAILURE<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
 <h2 id="performance-of-system-calls">Performance of system calls</h2>
 <p>All the copying implies your program is not executing instructions.<br>
 This slows program behavior.</p>
